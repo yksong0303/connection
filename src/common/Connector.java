@@ -11,7 +11,7 @@ public class Connector {
 	private static final String ID = "c##test";
 	private static final String PWD = "test";
 	private static final String DN = "oracle.jdbc.driver.OracleDriver";
-	private static Connection conn;
+	
 	static {
 		try {
 			Class.forName(DN);
@@ -23,7 +23,9 @@ public class Connector {
 	}
 	public static Connection open() {
 		try {
-			return DriverManager.getConnection(URL, ID, PWD);
+			Connection con =  DriverManager.getConnection(URL, ID, PWD);
+			con.setAutoCommit(false);
+			return con;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,17 +35,48 @@ public class Connector {
 	}
 
 	public static void main(String[] args){
-		Connection con = open();
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		
 		try {
-			Statement stmt = con.createStatement();
+			
+			con = open();
+			stmt = con.createStatement();
 			String sql = "select l_num, l_lentdate, l_recdate, m_num, b_num from lent";
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				System.out.println(rs.getInt("l_num"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		if(stmt!=null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(con!=null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 				
 
