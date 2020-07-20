@@ -177,9 +177,10 @@ public class MemberDAOImpl implements MemberDAO {
 			while(rs.next()) {
 				Map<String, Object> map = new HashMap<>();
 				map.put("m_num",rs.getInt("m_num"));
+				map.put("m_name",rs.getString("m_name"));
 				map.put("m_id",rs.getString("m_id"));
 				map.put("m_pwd",rs.getString("m_pwd"));
-				map.put("m_credat",rs.getString("m_credate"));
+				map.put("m_credate",rs.getString("m_credate"));
 				return map;
 			}
 		} catch (Exception e) {

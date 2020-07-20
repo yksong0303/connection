@@ -6,9 +6,9 @@ import java.util.Map;
 
 import com.member.lib.dao.MemberDAO;
 import com.member.lib.dao.Impl.MemberDAOImpl;
-import com.member.lib.service.MemberServiece;
+import com.member.lib.service.MemberService;
 
-public class MemberServiceImpl implements MemberServiece {
+public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO = new MemberDAOImpl();
 
 	public Map<String, Object> insertMember(Map<String, Object> Member) {
@@ -55,7 +55,7 @@ public class MemberServiceImpl implements MemberServiece {
 		return memberDAO.selectMember(mNum);
 	}
 	public static void main(String[] args) {
-		MemberServiece memberService = new MemberServiceImpl();
+		MemberService memberService = new MemberServiceImpl();
 		
 		
 //		Map<String,Object> rMap = memberService.deleteMember(33);

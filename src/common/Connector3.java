@@ -1,54 +1,62 @@
 package common;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-public class Connector3 {
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521/xe";
-	private static final String ID = "c##test";
-	private static final String PWD = "test";
-	private static final String DN = "oracle.jdbc.driver.OracleDriver";
-	private static Connection conn;
-	static {
-		try {
-			Class.forName(DN);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+public class Connector3{
+	public static void main(String[] args) {
 		
-	}
-	public static Connection open() {
-		if(conn==null) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			
+		}catch(ClassNotFoundException e) {
+		e.printStackTrace();
+		}
+		Connection conn = null;
+		Statement stmt = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/xe","c##test","test");
+			String sql = "select * from test";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				System.out.println(rs.getInt("num"));
+			}
+			sql = "update test set id = ?, name = ? where num = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"하이");
+			ps.setString(2,"바이");
+			ps.setInt(3, 2);
+			ps.executeUpdate();
+			sql = "insert into test(name, id , user) values(?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "하이2");
+			ps.setString(2, "바이2");
+			ps.setString(3, "보이");
+			ps.executeUpdate();
+			sql = "delete from test where num = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, 20);
+			ps.executeQuery();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
 			try {
-				return DriverManager.getConnection(URL, ID, PWD);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				if(rs!=null) {
+					rs.close();
+				}
+				if(ps!=null) {
+					ps.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			}catch(SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return null;
 		
 	}
-	
-	public static void main(String[] args) {
-		Connection con = open();
-		try {
-			Statement stmt = con.createStatement();
-			String sql = "select l_num, l_lentdate, l_recdate, m_num, b_num from lent";
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()) {
-				System.out.println(rs.getInt("l_num"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-
 }
