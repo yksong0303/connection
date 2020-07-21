@@ -25,5 +25,6 @@
 	</tr>
 </c:forEach>
 </table>
+<a href="/views/member/member_insert"><button>회원 추가</button></a>
 </body>
 </html>

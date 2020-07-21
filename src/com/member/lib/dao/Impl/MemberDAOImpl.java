@@ -25,11 +25,11 @@ public class MemberDAOImpl implements MemberDAO {
 			String sql = "insert into member(m_num,m_name,m_id,m_pwd,m_credate )";
 			sql += "values(seq_member_m_num.nextval,?,?,?,sysdate)";
 			ps = con.prepareStatement(sql);
-			ps.setNString(1, Member.get("m_name").toString());
-			ps.setNString(2, Member.get("m_id").toString());
-			ps.setNString(3, Member.get("m_pwd").toString());
+			ps.setString(1, Member.get("m_name").toString());
+			ps.setString(2, Member.get("m_id").toString());
+			ps.setString(3, Member.get("m_pwd").toString());
 			result = ps.executeUpdate();
-			con.commit();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -47,7 +47,7 @@ public class MemberDAOImpl implements MemberDAO {
 			
 		}
 			
-		return result;
+		 return result;
 	}
 	
 
@@ -69,7 +69,6 @@ public class MemberDAOImpl implements MemberDAO {
 			ps.setString(3, Member.get("m_pwd").toString());
 			ps.setInt(4, (int)Member.get("m_num"));
 			result = ps.executeUpdate();
-			con.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -85,7 +84,9 @@ public class MemberDAOImpl implements MemberDAO {
 			}
 			
 		}
-		return result;
+		 return result;
+  
+
 	}
 
 	@Override
@@ -99,7 +100,6 @@ public class MemberDAOImpl implements MemberDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, mNum);
 			result = ps.executeUpdate();
-			con.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -116,7 +116,8 @@ public class MemberDAOImpl implements MemberDAO {
 			
 		}
 			
-		return result;
+		 return result;
+
 	}
 
 	@Override
@@ -140,6 +141,7 @@ public class MemberDAOImpl implements MemberDAO {
 				map.put("m_credate",rs.getString("m_credate"));
 				memberList.add(map);
 				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,7 +160,8 @@ public class MemberDAOImpl implements MemberDAO {
 			}
 			
 		// TODO Auto-generated method stub
-		return memberList;
+		 return memberList;
+
 	}
 
 	@Override

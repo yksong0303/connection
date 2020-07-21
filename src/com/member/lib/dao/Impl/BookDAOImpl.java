@@ -25,9 +25,9 @@ public class BookDAOImpl implements BookDAO {
 			String sql = "insert into book(b_num,b_title,b_author,b_credat,b_desc)";
 			sql += "values(seq_book_b_num.nextval,?,?,sysdate,?)";
 			ps = con.prepareStatement(sql);
-			ps.setNString(1, Book.get("b_title").toString());
-			ps.setNString(2, Book.get("b_author").toString());
-			ps.setNString(3, Book.get("b_desc").toString());
+			ps.setString(1, Book.get("b_title").toString());
+			ps.setString(2, Book.get("b_author").toString());
+			ps.setString(3, Book.get("b_desc").toString());
 			result = ps.executeUpdate();
 			con.commit();
 		} catch (Exception e) {

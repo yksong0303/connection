@@ -7,38 +7,37 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form method="post" action="/member/update" id="frm">
-<input type="hidden" name="m_num" value="${member.m_num}">
+<form method="post" action="/book/update" id="frm">
+<input type="hidden" name="b_num" value="${book.b_num}">
 <table border="1">
 	<tr>
 		<th>번호</th>
-		<td>${member.m_num}</td>
+		<td>${book.b_num}</td>
 	</tr>
 	<tr>
-		<th>이름</th>
-		<td><input type="text" name="m_name" value= "${member.m_name}"></td>
+		<th>제목</th>
+		<td><input type="text" name="b_title" value="${book.b_title}"></td>
 	</tr>
 	<tr>
-		<th>아이디</th>
-		<td><input type="text" name="m_id" value= "${member.m_id}"></td>
+		<th>지은이</th>
+		<td><input type="text" name="b_author" value="${book.b_author}"></td>
 	</tr>
 	<tr>
-		<th>비밀번호</th>
-		<td><input type="text" name="m_pwd" value= "${member.m_pwd}"></td>
+		<th>출판일</th>
+		<td>${book.b_credat}</td>
 	</tr>
 	<tr>
-		<th>가입일</th>
-		<td>${member.m_credate}</td>
+		<th>내용</th>
+		<td><input type="text" name="b_desc" value="${book.b_desc}"></td>
 	</tr>
 	<tr>
 	<th colspan="2"><button>수정</button><button type="button" onclick="doDelete()">삭제</button></th>
-	</tr>
 </table>
 </form>
 <script>
 function doDelete(){
 	var formObj = document.querySelector('#frm')
-	formObj.action = '/member/delete';
+	formObj.action = '/book/delete';
 	formObj.submit();
 }
 </script>

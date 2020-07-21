@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService {
 //			System.out.println(bok);
 //		} //전체도서
 		
-//		Map<String,Object> rMap = memberService.deleteMember(33);
+//		Map<String,Object> rMap = BookberService.deleteMember(33);
 //		System.out.println(rMap); //삭제
 		
 		Map<String,Object> rMap = BookService.updateBook(book);
