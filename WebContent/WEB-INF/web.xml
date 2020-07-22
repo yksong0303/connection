@@ -14,11 +14,11 @@
   	<servlet-name>MemberServlet</servlet-name>
   	<servlet-class>com.member.lib.servlet.MemberServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
   	<servlet-name>MemberServlet</servlet-name>
   	<url-pattern>/member/*</url-pattern>
   </servlet-mapping>
+  
   <servlet>
   	<servlet-name>BookServlet</servlet-name>
   	<servlet-class>com.member.lib.servlet.BookServlet</servlet-class>
@@ -27,4 +27,14 @@
   	<servlet-name>BookServlet</servlet-name>
   	<url-pattern>/book/*</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>LentServlet</servlet-name>
+  	<servlet-class>com.member.lib.servlet.LentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LentServlet</servlet-name>
+  	<url-pattern>/lent/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

@@ -124,16 +124,21 @@ public class LentDAOImpl implements LentDAO {
 	      ResultSet rs = null;
 	      try {
 	         con = Connector.open();
-	         String sql = "select l_num, l_lentdate, l_recdate, m_num, b_num from lent";
+	         String sql = "select l.*,m.m_name,b.b_title from lent l, member m, book b\r\n" + 
+	         		"where l.m_num=m.m_num\r\n" + 
+	         		"and b.b_num = l.b_num";
 	         ps = con.prepareStatement(sql);
 	         rs = ps.executeQuery();
 	         while (rs.next()) {
 	            Map<String, Object> map = new HashMap<>();
 	            map.put("l_num", rs.getInt("l_num"));
-	            map.put("l_lentdate", rs.getString("l_lentdate"));
-	            map.put("l_recdate", rs.getString("l_recdate"));
+	            map.put("l_lentdat", rs.getString("l_lentdat"));
+	            map.put("l_recdat", rs.getString("l_recdat"));
 	            map.put("m_num", rs.getString("m_num"));
 	            map.put("b_num", rs.getString("b_num"));
+	            map.put("m_name", rs.getString("m_name"));
+	            map.put("b_title", rs.getString("b_title"));
+	            
 	            lentList.add(map);
 	         }
 	      } catch (Exception e) {
@@ -155,24 +160,62 @@ public class LentDAOImpl implements LentDAO {
 
 
 	@Override
+	
 	public Map<String, Object> selectLent(int lNum) {
-		Connection con = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = Connector.open();
+        String sql = "select l_num, l_lentdat, l_recdat, m_num, b_num from lent where l_num = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, lNum);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+           Map<String, Object> rMap = new HashMap<>();
+           rMap.put("l_num", rs.getInt("l_num"));
+           rMap.put("l_lentdat", rs.getString("l_lentdat"));
+           rMap.put("l_recdat", rs.getString("l_recdat"));
+           rMap.put("m_num", rs.getString("m_num"));
+           rMap.put("b_num", rs.getString("b_num"));
+           return rMap;
+        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ps!=null) {
+					ps.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+			}catch(SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public List<Map<String, Object>> selectNumLentBookList() {
+		 List<Map<String, Object>> lentList = new ArrayList<Map<String, Object>>();
+	      Connection con = null;
 	      PreparedStatement ps = null;
 	      ResultSet rs = null;
 	      try {
 	         con = Connector.open();
-	         String sql = "select l_num, l_lentdate, l_recdate, m_num, b_num from lent where b_num=?";
+	         String sql = "select b_num, b_title from book\r\n" + 
+	         		"where b_num not in(select b_num from lent\r\n" + 
+	         		"where l_recdate is null)";
 	         ps = con.prepareStatement(sql);
-	         ps.setInt(1, lNum);
 	         rs = ps.executeQuery();
-	         if (rs.next()) {
+	         while (rs.next()) {
 	            Map<String, Object> map = new HashMap<>();
-	            map.put("l_num", rs.getInt("l_num"));
-	            map.put("l_lentdate", rs.getString("l_lentdate"));
-	            map.put("l_recdate", rs.getString("l_recdate"));
-	            map.put("m_num", rs.getString("m_num"));
-	            map.put("b_num", rs.getString("b_num"));
-	            return map;
+	            map.put("b_num", rs.getInt("b_num"));
+	            map.put("b_title", rs.getString("b_title"));
+	            lentList.add(map);
 	         }
 	      } catch (Exception e) {
 	         e.printStackTrace();
@@ -188,9 +231,8 @@ public class LentDAOImpl implements LentDAO {
 	            e.printStackTrace();
 	         }
 	      }
-	      return null;
-	   }
-
+	      return lentList;
+	}
 	   public static void main(String[] args) {
 		   LentDAO lent = new LentDAOImpl();
 		   Map<String, Object> map = new HashMap<>();
@@ -200,4 +242,6 @@ public class LentDAOImpl implements LentDAO {
 	   
 	      
 	   }
+
+
 }

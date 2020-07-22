@@ -22,16 +22,34 @@ public class LentServiceImpl implements LentService {
 
 	@Override
 	public Map<String, Object> updateLent(Map<String, Object> Lent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		  Map<String, Object> rMap = new HashMap<>();
+	      int result = lentDAO.insertLent(Lent);
+	      rMap.put("msg", "연장 수정완료 ");
+	      if (result != 1) {
+	         rMap.put("msg", "error");
+	      }
+	      rMap.put("cnt", result);
+	      return rMap;
+	   }
+
 
 	@Override
 	
 	public Map<String, Object> deleteLent(int lNum) {
-		// TODO Auto-generated method stub
-		return null;
+		 Map<String, Object> rMap = new HashMap<>();
+	      int result = lentDAO.deleteLent(lNum);
+	      rMap.put("msg", "연장 반납완료 ");
+	      if (result != 1) {
+	         rMap.put("msg", "error");
+	      }
+	      rMap.put("cnt", result);
+	      return rMap;
+	   }
+	
+	public Map<String,Object> selectLent(int lNum){
+		return lentDAO.selectLent(lNum);
 	}
+
 
 	@Override
 	public List<Map<String, Object>> selectLentList(Map<String, Object> Lent) {
@@ -39,10 +57,8 @@ public class LentServiceImpl implements LentService {
 		return lentDAO.selectLentList(Lent);
 	}
 
-	@Override
-	public Map<String, Object> selectLent(int lNum) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, Object>> selectNumLentBookList() {
+		return  lentDAO.selectNumLentBookList();
 	}
 	public static void main(String[] args) {
 		LentService lentService = new LentServiceImpl();

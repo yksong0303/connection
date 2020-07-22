@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>도서목록</title>
 </head>
 <body>
 <table border="1">
@@ -19,8 +19,8 @@
 <c:forEach items="${bookList}" var="book">
 	<tr>
 		<td>${book.b_num}</td>
-		<td>${book.b_title}</td>
-		<td><a href="/book/view?b_num=${book.b_num}">${book.b_author}</a></td>
+		<td><a href="/book/view?b_num=${book.b_num}">${book.b_title}</a></td>
+		<td>${book.b_author}</td>
 		<td>${book.b_credat}</td>
 		<td>${book.b_desc}</td>
 	</tr>
