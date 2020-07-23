@@ -2,6 +2,7 @@ package com.member.lib.servlet;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -24,12 +25,14 @@ public class LentServlet extends HttpServlet {
 			request.setAttribute("bookList", lentService.selectNumLentBookList());
 			RequestDispatcher rd = request.getRequestDispatcher("/views/lent/lent_insert");
 			rd.forward(request, response);
+		}else if ("/lent/lent_list".equals(uri)){
+			List<Map<String,Object>> lentList = lentService.selectLentList(null);
+			request.setAttribute("lentList",lentList);
+			RequestDispatcher rd = request.getRequestDispatcher("/views/lent/lent_list");
+			rd.forward(request,response);
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uri = request.getRequestURI();
 		if("/lent/lent_insert".equals(uri)) {

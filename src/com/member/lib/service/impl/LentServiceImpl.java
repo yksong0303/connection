@@ -45,17 +45,16 @@ public class LentServiceImpl implements LentService {
 	      rMap.put("cnt", result);
 	      return rMap;
 	   }
-	
-	public Map<String,Object> selectLent(int lNum){
-		return lentDAO.selectLent(lNum);
-	}
-
-
 	@Override
 	public List<Map<String, Object>> selectLentList(Map<String, Object> Lent) {
 		// TODO Auto-generated method stub
 		return lentDAO.selectLentList(Lent);
 	}
+	
+	public Map<String,Object> selectLent(int lNum){
+		return lentDAO.selectLent(lNum);
+	}
+
 
 	public List<Map<String, Object>> selectNumLentBookList() {
 		return  lentDAO.selectNumLentBookList();
